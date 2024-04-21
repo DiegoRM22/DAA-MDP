@@ -10,10 +10,16 @@ class Problem {
  public:
   Problem(const std::string& filename);
   std::vector<Element> GetElements() const { return elements_; }
+  int GetElementsSize() const { return elementsSize_; }
+  Element GetElement(int index) const { return elements_[index]; }
+  int GetElementDimensions() const { return elementDimensions_; }
+  void RemoveElement(const Element& element);
  private:
   std::vector<Element> elements_;
   int elementsSize_;
   int elementDimensions_;
 };
+
+std::ostream& operator<<(std::ostream& os, const Problem& problem);
 
 #endif
