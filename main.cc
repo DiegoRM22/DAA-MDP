@@ -4,6 +4,8 @@
 #include "utils/utils.h"
 #include "greedy/greedy.h"
 #include "solution/solution.h"
+#include "local-search/local-search.h"
+#include "local-search/swap-elements-search/swap-elements-search.h"
 
 int main(int argc, char *argv[]) {
   const std::string filename = argv[1];
@@ -25,6 +27,12 @@ int main(int argc, char *argv[]) {
     std::cout << inSolution[i] << " ";
   }
   std::cout << std::endl;
+
+  SwapElementsSearch swapElementsSearch(problem, solution);
+  Solution localSeacrch = swapElementsSearch.Solve();
+  std::cout << "Local search: " << localSeacrch << std::endl;
+  distance = localSeacrch.CalculatesObjectiveFunction(problem);
+  std::cout << "Objective function: " << distance << std::endl;
 
   
   return 0;

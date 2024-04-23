@@ -17,6 +17,7 @@ class Solution {
   void SetInSolution(const std::vector<Element>& problemElements);
   std::vector<bool> GetInSolution() const { return inSolution; }
   double CalculatesObjectiveFunction(const Problem& problem);
+  void ReplaceElement(const Element& element, const int index) { elements[index] = element; }
  private:
   std::vector<Element> elements;
   std::vector<bool> inSolution;
