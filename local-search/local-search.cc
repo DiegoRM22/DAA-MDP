@@ -8,13 +8,8 @@
   */
 Solution LocalSearch::Solve() {
   Solution bestSolution = currentSolution_;
-  std::cout << "Initial solution: " << currentSolution_ << std::endl;
   // print neighbor solutions
   std::vector<Solution> neighbors = GenerateNeighbors(currentSolution_);
-  std::cout << "Neighbors: " << std::endl;
-  for (Solution neighbor : neighbors) {
-    std::cout << neighbor << std::endl;
-  }
   do {
     currentSolution_ = FindBestNeighbor(neighbors);
     if (currentSolution_.CalculatesObjectiveFunction(problem_) > bestSolution.CalculatesObjectiveFunction(problem_)) {

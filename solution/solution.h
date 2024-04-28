@@ -18,9 +18,13 @@ class Solution {
   std::vector<bool> GetInSolution() const { return inSolution; }
   double CalculatesObjectiveFunction(const Problem& problem);
   void ReplaceElement(const Element& element, const int index) { elements[index] = element; }
+  double GetDiversity() const { return diversity_; }
+  Element EvaluatesMovementDiversity(const Element& element, const int index, const Problem& problem);
+  Element Difference(const Solution& solution) const;
  private:
   std::vector<Element> elements;
   std::vector<bool> inSolution;
+  double diversity_;
 };
 
 std::ostream& operator<<(std::ostream& os, const Solution& solution);

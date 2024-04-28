@@ -43,3 +43,7 @@ bool operator==(const Element& element1, const Element& element2) {
   }
   return true;
 }
+
+bool operator!=(const Element& element1, const Element& element2) {
+  return !(element1 == element2);
+}

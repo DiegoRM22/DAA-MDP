@@ -20,5 +20,6 @@ class Element {
 // Ostream operator overload for Element
 std::ostream& operator<<(std::ostream& os, const Element& element);
 bool operator==(const Element& element1, const Element& element2);
+bool operator!=(const Element& element1, const Element& element2);
 
 #endif
