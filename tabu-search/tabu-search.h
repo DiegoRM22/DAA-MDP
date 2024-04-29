@@ -16,7 +16,7 @@
 class TabuSearch {
  public:
   TabuSearch(Problem problem, int tabuListSize, int maxIterations) : problem_(problem), tabuListSize_(tabuListSize), maxIterations_(maxIterations) {}
-  Solution Solve();
+  Solution Solve(const Solution& initialSolution = Solution());
   Movement FindMovement(const Solution& originalSolution, const Solution& bestNeighbor);
   bool IsInTabuList(const Movement& movement);
   Solution GenerateCandidateSolution(Solution currentSolution, Solution bestSolution);

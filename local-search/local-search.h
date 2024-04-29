@@ -11,6 +11,7 @@ class LocalSearch {
  public:
   LocalSearch(Problem problem, Solution solution) : problem_(problem), currentSolution_(solution) {}
   Solution Solve();
+  Solution SolveModified();
   Solution GenerateRandomSolution();
   virtual std::vector<Solution> GenerateNeighbors(const Solution& solution) = 0;
   Solution FindBetterNeighbor(const std::vector<Solution>& neighbors);

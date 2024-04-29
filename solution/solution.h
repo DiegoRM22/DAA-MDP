@@ -17,6 +17,7 @@ class Solution {
   void SetInSolution(const std::vector<Element>& problemElements);
   std::vector<bool> GetInSolution() const { return inSolution; }
   double CalculatesObjectiveFunction(const Problem& problem);
+  double CalculatesObjectiveFunction(const Element& originalElement, const Element& newElement);
   void ReplaceElement(const Element& element, const int index) { elements[index] = element; }
   double GetDiversity() const { return diversity_; }
   Element EvaluatesMovementDiversity(const Element& element, const int index, const Problem& problem);

@@ -14,6 +14,23 @@ double Solution::CalculatesObjectiveFunction(const Problem& problem) {
   return objectiveFunction;
 }
 
+double Solution::CalculatesObjectiveFunction(const Element& originalElement, const Element& newElement) {
+  double difference = 0.0;
+  // Calculate the difference between the new element and the other elements in the solution
+  for (int i = 0; i < elements.size(); i++) {
+    double originalDistance = 0.0;
+    double newDistance = 0.0;
+    if (elements[i] != originalElement) {
+      originalDistance = EuclideanDistance(originalElement, elements[i]);
+    }
+    if (elements[i] != newElement) {
+      newDistance = EuclideanDistance(newElement, elements[i]);
+    }
+    difference += newDistance - originalDistance;
+  }
+  return diversity_ + difference;
+}
+
 void Solution::SetInSolution(const std::vector<Element>& problemElements) {
   inSolution = std::vector<bool>(problemElements.size(), false);
   for (Element element : elements) {

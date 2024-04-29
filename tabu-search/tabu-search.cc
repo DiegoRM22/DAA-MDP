@@ -6,14 +6,14 @@
 
 #include "tabu-search.h"
 
-Solution TabuSearch::Solve() {
+Solution TabuSearch::Solve(const Solution& initialSolution) {
   Solution bestSolution = GRASP(problem_, 3).Solve();
   double bestDistance = bestSolution.CalculatesObjectiveFunction(problem_);
-  
   Solution currentSolution = bestSolution;
   int iterations = 0;
   while (iterations < maxIterations_) {
     Solution candidateSolution = GenerateCandidateSolution(currentSolution, bestSolution);
+    Movement movement = FindMovement(currentSolution, candidateSolution);
     double candidateDistance = candidateSolution.CalculatesObjectiveFunction(problem_);
     if (candidateDistance > bestDistance) {
       bestSolution = candidateSolution;
@@ -41,7 +41,8 @@ Solution TabuSearch::GenerateCandidateSolution(Solution currentSolution, Solutio
   } else {
     // Criterio de aspiración.
     // Si está en la lista tabú, se acepta si es mejor que la mejor solución encontrada hasta ahora
-    if (bestNeighbor.CalculatesObjectiveFunction(problem_) > bestSolution.CalculatesObjectiveFunction(problem_)) {
+    if (bestNeighbor.CalculatesObjectiveFunction(movement.GetElement1(), movement.GetElement2()) >
+        bestSolution.CalculatesObjectiveFunction(problem_)) {
       return bestNeighbor;
     } else {
       // Si no es mejor, se acepta el mejor vecino no tabú

@@ -21,6 +21,24 @@ Solution LocalSearch::Solve() {
 }
 
 /**
+ * @brief Method to solve the problem only evaluating the movement that improves the solution.
+ * @return The best solution found.
+*/
+Solution LocalSearch::SolveModified() {
+  Solution bestSolution = currentSolution_;
+  // print neighbor solutions
+  std::vector<Solution> neighbors = GenerateNeighbors(currentSolution_);
+  do {
+    currentSolution_ = FindBestNeighbor(neighbors);
+    if (currentSolution_.CalculatesObjectiveFunction(problem_) > bestSolution.CalculatesObjectiveFunction(problem_)) {
+      bestSolution = currentSolution_;
+    }
+    neighbors = GenerateNeighbors(currentSolution_);
+  } while (!IsLocalOptimum(currentSolution_, neighbors));
+  return bestSolution;
+}
+
+/**
  * @brief Finds the best neighbor solution.
  * @param neighbors Neighbors to evaluate.
  * @return The best neighbor solution.
