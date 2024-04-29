@@ -7,6 +7,7 @@
 #include "local-search/local-search.h"
 #include "local-search/swap-elements-search/swap-elements-search.h"
 #include "GRASP/GRASP.h"
+#include "tabu-search/tabu-search.h"
 
 int main(int argc, char *argv[]) {
   srand(time(NULL));
@@ -39,6 +40,13 @@ int main(int argc, char *argv[]) {
   Solution graspSolution = grasp.Solve();
   std::cout << "Solution: " << graspSolution << std::endl;
   distance = graspSolution.CalculatesObjectiveFunction(problem);
+  std::cout << "Objective function: " << distance << std::endl;
+
+  std::cout << "Tabu search" << std::endl;
+  TabuSearch tabuSearch(problem, 3, 10);
+  Solution tabuSolution = tabuSearch.Solve();
+  std::cout << "Solution: " << tabuSolution << std::endl;
+  distance = tabuSolution.CalculatesObjectiveFunction(problem);
   std::cout << "Objective function: " << distance << std::endl;
 
   

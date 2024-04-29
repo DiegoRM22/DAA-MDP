@@ -72,3 +72,15 @@ std::ostream& operator<<(std::ostream& os, const Solution& solution) {
   }
   return os;
 }
+
+bool operator==(const Solution& solution1, const Solution& solution2) {
+  if (solution1.GetSize() != solution2.GetSize()) {
+    return false;
+  }
+  for (int i = 0; i < solution1.GetSize(); i++) {
+    if (solution1.GetElements()[i] != solution2.GetElements()[i]) {
+      return false;
+    }
+  }
+  return true;
+}

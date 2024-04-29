@@ -7,6 +7,7 @@
 
 class Element {
  public:
+  Element() = default;
   Element(int dimensions, double* coordinates);
   Element(int dimensions, std::vector<double> coordinates);
 

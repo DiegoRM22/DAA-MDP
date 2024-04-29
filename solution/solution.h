@@ -28,5 +28,6 @@ class Solution {
 };
 
 std::ostream& operator<<(std::ostream& os, const Solution& solution);
+bool operator==(const Solution& solution1, const Solution& solution2);
 
 #endif
