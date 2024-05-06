@@ -17,6 +17,7 @@ class BranchAndBound {
   void CreateActiveNodes();
   void CreateActiveNodes(Node* node, int index);
   void PrintActiveNodes();
+  void AddNodeAndDescendantsToActiveNodes(Node* node);
  private:
   double LB = 0.0;
   double UB = 0.0;

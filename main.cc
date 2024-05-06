@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
   std::cout << "Branch and bound" << std::endl;
   BranchAndBound branchAndBound(problem, 3);
   branchAndBound.CreateActiveNodes();
+  branchAndBound.Solve();
   // branchAndBound.PrintActiveNodes();
 
   

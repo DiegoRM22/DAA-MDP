@@ -8,46 +8,42 @@
 Solution BranchAndBound::Solve() {
   Solution initialSolution = GRASP(problem_, solutionSize_).Solve();
   LB = initialSolution.CalculatesObjectiveFunction(problem_);
+  std::cout << "lB: " << LB << '\n';
+  while (!ActiveNodes.empty()) {
+    
+  }
+
+
 }
 
 void BranchAndBound::CreateActiveNodes() {
-  // Node rootNode{Element()};
-  // std::vector<Node*> children;
-  // for (int i = 0; i < problem_.GetElements().size(); i++) {
-  //   Node* child = new Node(problem_.GetElements()[i], &rootNode);
-  //   children.push_back(child);
-  // }
-  std::cout << "ELements size: " << problem_.GetElements().size() << std::endl;
+
+  // std::cout << "ELements size: " << problem_.GetElements().size() << std::endl;
+  Node* rootNode;
   for (int i = 0; i < problem_.GetElements().size(); i++) {
-    Node* rootNode = new Node(problem_.GetElements()[i]);
+    rootNode = new Node(problem_.GetElements()[i]);
+
     std::cout << "Metiendo nodo: " << rootNode->GetElement() << std::endl;
     CreateActiveNodes(rootNode, 1);
-    ActiveNodes.push_back(rootNode);
+    AddNodeAndDescendantsToActiveNodes(rootNode);
+    // ActiveNodes.push_back(rootNode);
   }
-
-  // ActiveNodes[0]->PrintDescendants();
-  // std::cout << "----------------" << std::endl;
-  // ActiveNodes[1]->PrintDescendants();
-  // std::cout << "----------------" << std::endl;
-  // ActiveNodes[2]->PrintDescendants();
-  // std::cout << "----------------" << std::endl;
-  // ActiveNodes[3]->PrintDescendants();
-  // std::cout << "----------------" << std::endl;
-  // ActiveNodes[4]->PrintDescendants();
-
-
-  // for (int i = 0; i < ActiveNodes.size(); i++) {
-  //   ActiveNodes[i]->PrintDescendants();
-  // }
-
 }
 
-bool IsInParents(Node* node, Node* toSearch) {
-  std::cout << "ENTRAMOS EN ESTA FUNCION" << std::endl;
+void BranchAndBound::AddNodeAndDescendantsToActiveNodes(Node* node) {
+  // Agregar el nodo actual a ActiveNodes
+  ActiveNodes.push_back(node);
+
+  // Recorrer todos los hijos del nodo actual y agregarlos recursivamente
+  const std::vector<Node*>& children = node->GetChildren();
+  for (int i = 0; i < children.size(); i++) {
+    AddNodeAndDescendantsToActiveNodes(children[i]);
+  }
+}
+
+bool IsInParents(Node* node, Node toSearch) {
   while (node->GetParent() != nullptr) {
-    std::cout << "Comparando: " << node->GetElement() << " con " << toSearch->GetElement() << std::endl;
-    if (node->GetElement() == toSearch->GetElement()) {
-      std::cout << "Elemento repetido: " << node->GetElement() << std::endl;
+    if (node->GetElement() == toSearch.GetElement()) {
       return true;
     }
     node = node->GetParent();
@@ -57,19 +53,17 @@ bool IsInParents(Node* node, Node* toSearch) {
 
 void BranchAndBound::CreateActiveNodes(Node* node, int index) {
   if (index == solutionSize_) {
-    std::cout << "LEAF NODE: " << node->GetElement() << std::endl;
+    // std::cout << "LEAF NODE: " << node->GetElement() << std::endl;
     node->SetIsLeafNode(true);
     return;
   }
-  // std::cout << "NODE: " << node->GetElement() << std::endl;
+  std::cout << "NODE: " << node->GetElement() << std::endl;
   std::vector<Node*> children;
   for (int i = 0; i < problem_.GetElements().size(); i++) {
-    std::cout << "La i: " << i << std::endl;
-    if (node->GetElement() != problem_.GetElements()[i] && !IsInParents(node, new Node(problem_.GetElements()[i], node))) {
+    std::cout << "comparando " << problem_.GetElements()[i] << '\n';
+    if (node->GetElement() != problem_.GetElements()[i] && !IsInParents(node, Node(problem_.GetElements()[i], node))) {
       Node* child = new Node(problem_.GetElements()[i], node);
       children.push_back(child);
-      std::cout << "La i inmediatamente despues: " << i << std::endl;
-
       std::cout << "Child: " << child->GetElement() << std::endl;
     }
   }
@@ -78,7 +72,6 @@ void BranchAndBound::CreateActiveNodes(Node* node, int index) {
     // children[i]->SetParent(node);
     CreateActiveNodes(children[i], index + 1);
   }
-
 }
 
 

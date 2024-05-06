@@ -45,7 +45,7 @@ class Node {
  private:
   Element element_;
   std::vector<Node*> children_;
-  Node* parent_;
+  Node* parent_ = nullptr;
   bool isLeafNode_ = false;
 };
 
