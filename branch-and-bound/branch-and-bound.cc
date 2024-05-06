@@ -33,7 +33,7 @@ void BranchAndBound::CreateActiveNodes() {
   // std::cout << "----------------" << std::endl;
   // ActiveNodes[3]->PrintDescendants();
   // std::cout << "----------------" << std::endl;
-  // std::cout << ActiveNodes[4]->GetElement() << std::endl;
+  // ActiveNodes[4]->PrintDescendants();
 
 
   // for (int i = 0; i < ActiveNodes.size(); i++) {
@@ -45,6 +45,7 @@ void BranchAndBound::CreateActiveNodes() {
 bool IsInParents(Node* node, Node* toSearch) {
   std::cout << "ENTRAMOS EN ESTA FUNCION" << std::endl;
   while (node->GetParent() != nullptr) {
+    std::cout << "Comparando: " << node->GetElement() << " con " << toSearch->GetElement() << std::endl;
     if (node->GetElement() == toSearch->GetElement()) {
       std::cout << "Elemento repetido: " << node->GetElement() << std::endl;
       return true;
@@ -63,16 +64,18 @@ void BranchAndBound::CreateActiveNodes(Node* node, int index) {
   // std::cout << "NODE: " << node->GetElement() << std::endl;
   std::vector<Node*> children;
   for (int i = 0; i < problem_.GetElements().size(); i++) {
+    std::cout << "La i: " << i << std::endl;
     if (node->GetElement() != problem_.GetElements()[i] && !IsInParents(node, new Node(problem_.GetElements()[i], node))) {
       Node* child = new Node(problem_.GetElements()[i], node);
       children.push_back(child);
+      std::cout << "La i inmediatamente despues: " << i << std::endl;
+
       std::cout << "Child: " << child->GetElement() << std::endl;
-    } else {
-      std::cout << "Elemento repetido: " << problem_.GetElements()[i] << std::endl;
     }
   }
   node->SetChildren(children);
   for (int i = 0; i < children.size(); i++) {
+    // children[i]->SetParent(node);
     CreateActiveNodes(children[i], index + 1);
   }
 
