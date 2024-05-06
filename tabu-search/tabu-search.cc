@@ -7,6 +7,7 @@
 #include "tabu-search.h"
 
 Solution TabuSearch::Solve(const Solution& initialSolution) {
+  // Generar GRASP en el multiarranque.
   Solution bestSolution = GRASP(problem_, 3).Solve();
   double bestDistance = bestSolution.CalculatesObjectiveFunction(problem_);
   Solution currentSolution = bestSolution;

@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
   std::cout << "Objective function: " << distance << std::endl;
 
   std::cout << "Tabu search" << std::endl;
-  TabuSearch tabuSearch(problem, 1, 25);
+  TabuSearch tabuSearch(problem, 3, 25);
   Solution tabuSolution = tabuSearch.Solve(graspSolution);
   std::cout << "Solution: " << tabuSolution << std::endl;
   distance = tabuSolution.CalculatesObjectiveFunction(problem);
