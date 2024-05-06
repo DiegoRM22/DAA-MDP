@@ -8,6 +8,7 @@
 #include "local-search/swap-elements-search/swap-elements-search.h"
 #include "GRASP/GRASP.h"
 #include "tabu-search/tabu-search.h"
+#include "branch-and-bound/branch-and-bound.h"
 
 int main(int argc, char *argv[]) {
   srand(time(NULL));
@@ -48,6 +49,11 @@ int main(int argc, char *argv[]) {
   std::cout << "Solution: " << tabuSolution << std::endl;
   distance = tabuSolution.CalculatesObjectiveFunction(problem);
   std::cout << "Objective function: " << distance << std::endl;
+
+  std::cout << "Branch and bound" << std::endl;
+  BranchAndBound branchAndBound(problem, 3);
+  branchAndBound.CreateActiveNodes();
+  // branchAndBound.PrintActiveNodes();
 
   
   return 0;
