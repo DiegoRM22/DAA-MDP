@@ -11,6 +11,7 @@ Solution BranchAndBound::Solve() {
   Solution initialSolution = GRASP(problem_, solutionSize_).Solve();
   std::cout << "Initial solution: " << initialSolution << '\n';
   LB = initialSolution.CalculatesObjectiveFunction(problem_);
+  Solution bestSolution = initialSolution;
   std::cout << "lB: " << LB << '\n';
   while (!ActiveNodes.empty()) {
     // std::cout << "Active nodes size: " << ActiveNodes.size() << '\n';
@@ -20,15 +21,15 @@ Solution BranchAndBound::Solve() {
       double distance = solution.CalculatesObjectiveFunction(problem_);
       if (distance > LB) {
         LB = distance;
-        std::cout << "New LB: " << LB << '\n';
-        std::cout << "Solution: " << solution << '\n';
+        // std::cout << "New LB: " << LB << '\n';
+        // std::cout << "Solution: " << solution << '\n';
       }
       ActiveNodes.erase(ActiveNodes.begin());
     } else {
       Solution partialSolution = GetPartialSolution(node);
       if (partialSolution.GetSize() < solutionSize_) {
-        std::cout << "Partial solution: ";
-        std::cout << partialSolution << '\n';
+        // std::cout << "Partial solution: ";
+        // std::cout << partialSolution << '\n';
         // Compute dmax for the partial solution
         std::vector<Element> UnSelectedElements = GetUnselectedElements(partialSolution);
         if (ComputeDmax(partialSolution) < ComputeDmin(UnSelectedElements)) {
@@ -39,18 +40,22 @@ Solution BranchAndBound::Solve() {
           // Computing the Upper Bound: z1 + UB23 of node
           // z1 is the objective function of the partial solution
           double z1 = partialSolution.CalculatesObjectiveFunction(problem_);
-          std::cout << "Solution: " << partialSolution << '\n';
+          // std::cout << "Solution: " << partialSolution << '\n';
           double UB23 = CalculateUB23(partialSolution);
           std::vector<Element> selectedVertices = SelectVerticesWithMaxZValues(partialSolution, solutionSize_ - partialSolution.GetSize());
           // Compute the value z' of solution x = (51, 52, .., Sk Vi, V2..., Va )
           Solution AddedSolution;
+          Solution completeSolution = partialSolution;
+
           for (int i = 0; i < selectedVertices.size(); i++) {
             AddedSolution.AddElement(selectedVertices[i]);
+            completeSolution.AddElement(selectedVertices[i]);
           }
           double zPrime = CalculatesZPrime(partialSolution, AddedSolution);
           if (zPrime > LB) {
-            std::cout << "New LB: " << zPrime << '\n';
+            // std::cout << "New LB: " << zPrime << '\n';
             LB = zPrime;
+            bestSolution = completeSolution;
           }
           if (z1 + UB23 < LB) {
             // std::cout << "Pruning" << '\n';
@@ -65,7 +70,7 @@ Solution BranchAndBound::Solve() {
               continue;
             }
             ActiveNodes.erase(ActiveNodes.begin());
-            ActiveNodes.push_back(node);
+            // ActiveNodes.push_back(node);
           } else {
             // add the child nodes to the active nodes
             std::vector<Node*> children = node->GetChildren();
@@ -80,6 +85,8 @@ Solution BranchAndBound::Solve() {
       }
     }
   }
+  std::cout << "Final LB: " << LB << '\n';
+  return bestSolution;
 }
 
 double BranchAndBound::CalculateIUB(double z, Solution partialSolution) {
