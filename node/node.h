@@ -21,6 +21,13 @@ class Node {
   void SetChildren(std::vector<Node*> children) { children_ = children; }
   void SetParent(Node* parent) { parent_ = parent; }
   void SetIsLeafNode(bool isLeafNode) { isLeafNode_ = isLeafNode; }
+  bool IsLeafNode() const { return isLeafNode_; }
+  bool CheckIfIsLeafNode() {
+    if (children_.size() == 0) {
+      isLeafNode_ = true;
+    }
+    return false;
+  }
 
   void PrintChildren() {
     for (int i = 0; i < children_.size(); i++) {

@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   distance = tabuSolution.CalculatesObjectiveFunction(problem);
   std::cout << "Objective function: " << distance << std::endl;
 
-  std::cout << "Branch and bound" << std::endl;
+  std::cout << "\n\n\nBranch and bound" << std::endl;
   BranchAndBound branchAndBound(problem, 3);
   branchAndBound.CreateActiveNodes();
   branchAndBound.Solve();

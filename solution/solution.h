@@ -14,6 +14,7 @@ class Solution {
   void AddElement(const Element& element) { elements.push_back(element); }
   int GetSize() const { return elements.size(); }
   std::vector<Element> GetElements() const { return elements; }
+  Element GetElement(int index) const { return elements[index]; }
   void SetInSolution(const std::vector<Element>& problemElements);
   std::vector<bool> GetInSolution() const { return inSolution; }
   double CalculatesObjectiveFunction(const Problem& problem);
